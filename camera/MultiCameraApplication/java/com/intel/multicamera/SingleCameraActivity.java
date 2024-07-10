@@ -397,9 +397,6 @@ public class SingleCameraActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(getApplicationContext(),
                                 Manifest.permission.RECORD_AUDIO) ==
-                                PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(getApplicationContext(),
-                                Manifest.permission.READ_EXTERNAL_STORAGE) ==
                                 PackageManager.PERMISSION_GRANTED;
 
         if (!mHasCriticalPermissions) {

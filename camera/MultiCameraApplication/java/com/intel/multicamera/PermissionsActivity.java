@@ -43,7 +43,6 @@ public class PermissionsActivity extends QuickActivity {
     private int mIndexPermissionRequestStorage;
     private boolean mShouldRequestCameraPermission;
     private boolean mShouldRequestMicrophonePermission;
-    private boolean mShouldRequestStoragePermission;
     private int mNumPermissionsToRequest;
     private boolean mFlagHasCameraPermission;
     private boolean mFlagHasMicrophonePermission;
@@ -122,15 +121,6 @@ public class PermissionsActivity extends QuickActivity {
             mFlagHasMicrophonePermission = true;
         }
 
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
-                                               Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-            PackageManager.PERMISSION_GRANTED) {
-            mNumPermissionsToRequest++;
-            mShouldRequestStoragePermission = true;
-        } else {
-            mFlagHasStoragePermission = true;
-        }
-
         if (mNumPermissionsToRequest != 0) {
             if (!convertToBoolean(getString("pref_has_seen_permissions_dialogs", "false"))) {
                 buildPermissionsRequest();
@@ -158,12 +148,6 @@ public class PermissionsActivity extends QuickActivity {
         if (mShouldRequestMicrophonePermission) {
             permissionsToRequest[permissionsRequestIndex] = Manifest.permission.RECORD_AUDIO;
             mIndexPermissionRequestMicrophone = permissionsRequestIndex;
-            permissionsRequestIndex++;
-        }
-        if (mShouldRequestStoragePermission) {
-            permissionsToRequest[permissionsRequestIndex] =
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE;
-            mIndexPermissionRequestStorage = permissionsRequestIndex;
             permissionsRequestIndex++;
         }
 
@@ -195,16 +179,7 @@ public class PermissionsActivity extends QuickActivity {
                 handlePermissionsFailure();
             }
         }
-        if (mShouldRequestStoragePermission) {
-            if (grantResults.length > 0 &&
-                grantResults[mIndexPermissionRequestStorage] == PackageManager.PERMISSION_GRANTED) {
-                mFlagHasStoragePermission = true;
-            } else {
-                handlePermissionsFailure();
-            }
-        }
-
-        if (mFlagHasCameraPermission && mFlagHasMicrophonePermission && mFlagHasStoragePermission) {
+        if (mFlagHasCameraPermission && mFlagHasMicrophonePermission) {
             handlePermissionsSuccess();
         } else {
             // Permissions dialog has already been shown
