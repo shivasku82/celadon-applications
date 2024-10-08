@@ -455,7 +455,15 @@ public class FullScreenActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.v(TAG, "onStop");
-        if(isSwitchingActivity == false)
+        if(isSwitchingActivity == false) {
+            closeCamera();
+            try {
+                // Sleep for 100ms to allow all camera to close properly
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.exit(0);
         }
     }
+}
