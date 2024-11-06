@@ -401,9 +401,9 @@ public class MultiViewActivity extends AppCompatActivity {
 
         Data[0] = "TopRightCam";
         Data[1] = CameraIds[1];
-        Data[2] = "capture_list_1";
-        Data[3] = "video_list_1";
-        Data[4] = "pref_resolution_1";
+        Data[2] = "capture_list";
+        Data[3] = "video_list";
+        Data[4] = "pref_resolution";
 
         mRecordingTimeView0 = findViewById(R.id.recording_time1);
 
